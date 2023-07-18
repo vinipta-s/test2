@@ -8,11 +8,17 @@ vehicles_data = pd.read_csv('vehicles_us.csv')
 ## added a column in the df for manufacturer from the model name
 vehicles_data['manufacturer'] = vehicles_data['model'].apply(lambda x: x.split()[0]) 
 
+## filling in missing values for 'model_year', 'cylinders' and 'odometer'
+vehicles_data['model_year'] = vehicles_data.groupby(["model"])['model_year'].transform(lambda x: x.fillna(x.median()))
+vehicles_data['cylinders'] = vehicles_data.groupby(["model"])['cylinders'].transform(lambda x: x.fillna(x.median()))
+vehicles_data['odometer'] = vehicles_data.groupby(["model"])['odometer'].transform(lambda x: x.fillna(x.median()))
+
 ## converting 'model_year' and 'date_posted' columns to datetime type.
 # vehicles_data['model_year'] = pd.to_datetime(vehicles_data['model_year']).dt.year
 vehicles_data['date_posted'] = pd.to_datetime(vehicles_data['date_posted']).dt.date
 ## converting 'model_year' resulted in an issue with the date and month to be set to 01-01-____
 ## is there a way to change the type of 'model_year' to datetime with just the year?
+
 
 ###########################################################################
 # Start of app on render 
@@ -22,12 +28,12 @@ st.write('This project contains the raw dataframe of vehicles sold in the US by 
 st.header('Vehicles data')
 st.dataframe(vehicles_data)
 
-st.markdown("---")
+st.write('Note: null values from the dataset for columns, "model_year", "cylinders" and "odometer" were filled with their respective model median. The "odometer" column was still null for 41 rows but this is ignored due to the low number in comparision to the total 51525 rows of data.')
+# null_values = vehicles_data.isna().sum().reset_index()
+# null_values.columns = ['columns', 'null values']
+# st.dataframe(null_values)
+## do not need to show the number of null values ^^^ in the render app 
 
-st.write('The table below lists the columns of the dataframe and their respective number of null values. Other than the "is_4wd" column, the count of null values for the other columns is not large compared to the 51,525 rows of data. Therefore, the rows with null values will be kept as part of the analysis for a broad overview of the data, while keeping in mind the lack of precision in the assessment due to the missing values.')
-null_values = vehicles_data.isna().sum().reset_index()
-null_values.columns = ['columns', 'null values']
-st.dataframe(null_values)
 
 st.markdown("---")
 ########################################################
