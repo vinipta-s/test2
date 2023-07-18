@@ -28,7 +28,7 @@ st.write('This project contains the raw dataframe of vehicles sold in the US by 
 st.header('Vehicles data')
 st.dataframe(vehicles_data)
 
-st.write('Note: null values from the dataset for columns, "model_year", "cylinders" and "odometer" were filled with their respective model median. The "odometer" column was still null for 41 rows but this is ignored due to the low number in comparision to the total 51525 rows of data.')
+st.write('Note: null values from the dataset for columns, "model_year", "cylinders" and "odometer" were filled with their respective model median. The "odometer" column was still null for 41 rows, but this is unlikely to effect the overall analysis due to the small quantity compared to the total 51,525 rows of data.')
 # null_values = vehicles_data.isna().sum().reset_index()
 # null_values.columns = ['columns', 'null values']
 # st.dataframe(null_values)
