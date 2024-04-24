@@ -10,3 +10,8 @@ streamlit run app.py
 
 # The render app will be accessible at 
 https://vehicles-ads-analysis.onrender.com/
+
+NoteBook (EDA.ipynb)
+car advertisement dataset: vehicles_us.csv
+
+streamlit wad used to deploy web application dashboard.
